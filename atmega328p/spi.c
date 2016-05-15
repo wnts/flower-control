@@ -33,7 +33,7 @@ int spi_config_set(enum SPI spi, struct SPIConfig * spi_config)
 }
 
 inline char spi_transfer_char(enum SPI spi, char c)
-{
+{	
 	switch(spi)
 	{
 		case SPI0:

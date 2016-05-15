@@ -22,9 +22,9 @@
 #define RF_DR_HIGH			3
 
 #define NRF_REG_STATUS		0x07
-#define MAX_RT				6
+#define MAX_RT				4
 #define TX_DS				5
-#define RX_DR				4
+#define RX_DR				6
 
 #define NRF_REG_TX_ADDR		0x10
 #define NRF_REG_PW_P0		0x11
@@ -57,7 +57,7 @@ int nrf_reg_write(uint8_t reg_addr, uint8_t * data, unsigned short len);
 
 inline uint8_t nrf_reg8_read(uint8_t reg_addr)
 {
-	uint8_t reg8 = 0;		
+	uint8_t reg8 = 0;			
 	nrf_reg_read(reg_addr, &reg8, sizeof(reg8));
 	return reg8;
 }

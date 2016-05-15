@@ -36,21 +36,21 @@ int nrf_init(enum SPI spi)
 }
 
 int nrf_send_cmd(uint8_t cmd, uint8_t * data_recv, uint8_t * data_send, unsigned short len)
-{
+{		
 	GPIO_PIN_SET(B, 2, 0);
-	spi_transfer_char(s_spi, cmd);	
+	spi_transfer_char(s_spi, cmd);		
 	for(int i = 0; i != len; i++)
 	{		
-			if(data_send == NULL && data_recv == NULL)
-				return 0;
-			if(data_send != NULL)
-			{
-				spi_transfer_char(s_spi, data_send[i]);
-			}
-			else
-			{
-				data_recv[i] = spi_transfer_char(s_spi, 0xff);
-			}		
+		if(data_send == NULL && data_recv == NULL)
+		return 0;
+		if(data_send != NULL)
+		{
+			spi_transfer_char(s_spi, data_send[i]);
+		}
+		else
+		{
+			data_recv[i] = spi_transfer_char(s_spi, 0xff);
+		}
 	}
 	GPIO_PIN_SET(B, 2, 1);
 	return 1;
@@ -58,7 +58,7 @@ int nrf_send_cmd(uint8_t cmd, uint8_t * data_recv, uint8_t * data_send, unsigned
 }
 
 int nrf_reg_read(uint8_t reg_addr, uint8_t * data, unsigned short len)
-{
+{	
 	return nrf_send_cmd(reg_addr, data, NULL, len);
 }
 
@@ -67,7 +67,7 @@ int nrf_reg_write(uint8_t reg_addr, uint8_t * data, unsigned short len)
 	return nrf_send_cmd(reg_addr | 0x20, NULL, data, len);
 }
 
-int nrf_address_set(uint8_t *  addr)
+int nrf_address_set(uint8_t * addr)
 {
 	return nrf_reg_write(NRF_REG_TX_ADDR, addr, NRF_MAX_ADDR_LEN);
 }

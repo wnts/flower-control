@@ -3,6 +3,8 @@
 #include <avr/interrupt.h>
 #include <stdio.h>
 #include <util/delay.h>
+
+#include "adc.h"
 #include "uart.h"
 #include "spi.h"
 #include "log.h"
@@ -15,8 +17,9 @@ ISR(INT0_vect)
 {		
 	uint8_t irq = GPIO_PIN_GET(B, 0);
 	GPIO_PIN_SET(B, 1, 0);			
-	printf("IRQ = %d\n", irq);
+	printf("IRQ = %d\n", irq);	
 	uint8_t status = nrf_reg8_read(NRF_REG_STATUS);
+	printf("status = %02x\n", status);	
 	if(status & (1 << MAX_RT))
 	{
 		printf("max rt\n");
@@ -32,7 +35,7 @@ ISR(INT0_vect)
 		printf("tx\n");
 		nrf_reg8_bit_set(NRF_REG_STATUS, TX_DS, 1);
 	}
-	g_int = 1;	
+	g_int = 1;		
 }
 
 
@@ -42,12 +45,33 @@ ISR(BADISR_vect)
 	printf("default int vector!\n");
 }
 
+int main(void)
+{
+	uint16_t result = 0;
+
+	log_init();	
+	adc_enable();	
+	adc_clkdiv_set(DIV128);
+	adc_vref_set(AVCC);
+	adc_input_set(ADC0);		
+	
+	while(1)
+	{
+		int ret = adc_read(&result);
+		if(ret != ADC_ERR_SUCCESS)
+			printf("Error!\n");
+		printf("result = %d\n", result);
+		_delay_ms(250);
+	}
+}
+/*
 int main() {
 	uint8_t payload[4];
 	uint8_t i = 0;
 	GPIO_PIN_DIR_SET(B, 1, DIR_OUTPUT);
+	GPIO_PIN_DIR_SET(D, 2, DIR_INPUT);
 	
-	log_init();
+	log_init();	
 	interrupt_global_enable();	
 	EICRA = (EICRA & ~3) | ICS_LOW;
 	EIMSK |= 1;
@@ -73,7 +97,7 @@ int main() {
 		g_int = 0;
 	}
 }
-
+*/
 /*
 int main(void)
 {

@@ -31,7 +31,6 @@ int nrf_init(enum SPI spi)
 	// set cs high
 	GPIO_PIN_SET(B, 2, 1);
 	spi_enable(s_spi);
-
 	return 1;
 }
 

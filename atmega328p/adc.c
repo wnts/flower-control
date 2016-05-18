@@ -16,8 +16,7 @@ int adc_read(uint16_t * result)
 		;
 	// clear ADIF by writing 1 to it
 	ADCSRA |= (1 << ADIF);
-	// get conversion result
-	printf("0x%02x%02x\n", ADCH, ADCL);
+	// get conversion result	
 	*result = ADC;
 
 	return ret;	

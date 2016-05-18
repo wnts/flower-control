@@ -112,8 +112,7 @@ inline void adc_disable(void)
  *		   ADC_ERR_CONVERSION_ONGOING when there already is an ongoing conversion
  */
 inline int adc_conversion_start(void)
-{
-	printf("0x%02x\n", ADCSRA);
+{	
 	if(ADCSRA & (1 << ADSC))
 		return ADC_ERR_CONVERSION_ONGOING;
 	ADCSRA |= (1 << ADSC);

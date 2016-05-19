@@ -148,7 +148,16 @@
     <Compile Include="clock.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="common.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hcsr04.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hcsr04.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="interrupt.c">
@@ -176,6 +185,15 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer-common.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer16.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer16.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="timer8.c">

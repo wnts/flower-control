@@ -12,6 +12,8 @@
 #include "nrf.h"
 #include "interrupt.h"
 #include "timer8.h"
+#include "timer16.h"
+#include "hcsr04.h"
 
 volatile int g_int;
 #define INT_NONE		0
@@ -38,7 +40,7 @@ ISR(TIMER0_COMPA_vect)
 void setup_t0(void)
 {
 	t0_clk_src_set(TCS_IO_CLK_DIV1024);
-	t0_opmode_set(TOM_CTC);
+	t0_opmode_set(TOM8_CTC);
 	OCR0A = 125;
 	TIMSK0 |= 1 << OCIE0A;
 }
@@ -63,7 +65,14 @@ void setup_adc(void)
 	adc_input_set(ADC0);
 }
 
+int main(void)
+{
+	log_init();
+	interrupt_global_enable();	
+	hcsr04_get_us();		
+}
 
+/*
 int main(void)
 {
 	unsigned char seconds = 0;
@@ -120,10 +129,10 @@ int main(void)
 		g_int = 0;
 		while(!g_sec)
 			;		
-		g_sec = 0;						*/
+		g_sec = 0;						
 	}	
 }
-
+*/
 /*
 int main(void)
 {

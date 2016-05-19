@@ -2,36 +2,32 @@
 #define TIMER8_H_
 #include <stdint.h>
 
-#define ERR_SUCCESS		1
+#include "common.h"
+#include "timer-common.h"
 
-enum Timer8Opmode { TOM_NORMAL = 0,
-					TOM_CTC = 2,
-					TOM_PWM_FAST = 3, 
-					TOM_PWM_PHASE_CORRECT  = 1 };
+
+
+enum Timer8Opmode { TOM8_NORMAL = 0,
+					TOM8_CTC = 2,
+					TOM8_PWM_FAST = 3, 
+					TOM8_PWM_PHASE_CORRECT  = 1 };
 
 enum Timer8Matchmode { MM_NONE,
 					   MM_TOGGLE,
 					   MM_CLEAR,
 					   MM_SET };
 
-enum Timer8ClkSrc { TCS_NONE,
-					TCS_IO_CLK,
-					TCS_IO_CLK_DIV8,
-					TCS_IO_CLK_DIV64,
-					TCS_IO_CLK_DIV256,
-					TCS_IO_CLK_DIV1024,
-					TCS_EXT_CLK_FALLING,
-					TCS_EXT_CLK_RISING };
 
-static enum Timer8ClkSrc saved_clk_src = TCS_NONE;
 
-inline int t0_clk_src_set(enum Timer8ClkSrc clk_src)
+static enum TimerClkSrc saved_clk_src = TCS_NONE;
+
+inline int t0_clk_src_set(enum TimerClkSrc clk_src)
 {
 	TCCR0B = (TCCR0B & ~(7 << CS00)) | clk_src;
 	return ERR_SUCCESS;
 }
 
-inline enum Timer8ClkSrc t0_clk_src_get(void)
+inline enum TimerClkSrc t0_clk_src_get(void)
 {
 	return TCCR0B & (7 << CS00);
 }
